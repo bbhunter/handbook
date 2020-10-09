@@ -66,7 +66,7 @@ under [Brute-Forcing]({{< ref "brute-forcing" >}}).
 ### gobuster [^gobuster]
 
 ```sh
-gobuster dir -t 30 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u https://{{< param "war.rhost" >}}/
+gobuster dir -t 30 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u https://{{< param "m.RHOST" >}}/
 ```
 {{<details "Parameters">}}
 - `dir`: directory brute-forcing mode.

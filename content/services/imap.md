@@ -28,17 +28,17 @@ until the user explicitly deletes them.
 
 #### Telnet
 ```sh
-telnet {{< param "war.rhost" >}} 143
+telnet {{< param "m.RHOST" >}} 143
 ```
 
 #### Netcat
 ```sh
-nc -n {{< param "war.rhost" >}} 143
+nc -n {{< param "m.RHOST" >}} 143
 ```
 
 #### openssl [^openssl]
 ```sh
-openssl s_client -connect {{< param "war.rhost" >}}:993
+openssl s_client -connect {{< param "m.RHOST" >}}:993
 ```
 {{<details "Parameters">}}
 - `s_client`:  SSL/TLS client program.
@@ -51,7 +51,7 @@ See [SMTP NTLM Information Disclosure]({{< ref "smtp#ntlm-information-disclosure
 #### Manually
 
 ```sh
-telnet {{< param "war.rdomain" >}} 143
+telnet {{< param "m.RDOMAIN" >}} 143
 ...
 >> a1 AUTHENTICATE NTLM
 +
@@ -62,7 +62,7 @@ telnet {{< param "war.rdomain" >}} 143
 #### [imap-ntlm-info](https://nmap.org/nsedoc/scripts/imap-ntlm-info.html) NSE Script
 
 ```sh
-nmap -p 143,993 --script imap-ntlm-info {{< param "war.rhost" >}}
+nmap -p 143,993 --script imap-ntlm-info {{< param "m.RHOST" >}}
 ```
 
 ## IMAP Exploits Search

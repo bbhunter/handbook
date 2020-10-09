@@ -46,13 +46,13 @@ Refer to [host discovert with nbtscan]({{< ref "host-discovery#nbtscan---netbios
 
 ```sh
 msf> use auxiliary/scanner/smb/smb_version
-msf> set rhost {{< param "war.rhost" >}}
+msf> set rhost {{< param "m.RHOST" >}}
 msf> run
 ```
 
 ## Common Login Credentials
 
-Backup and Management software requires dedicated user accounts on the server or local machine to function, and are often set with a weak password. [^mcnab-nsa]
+Backup and Management softm. requires dedicated user accounts on the server or local machine to function, and are often set with a weak password. [^mcnab-nsa]
 
 | Usernmae | Password |
 | -------- | -------- |
@@ -65,7 +65,7 @@ Backup and Management software requires dedicated user accounts on the server or
 
 ## Enumeration
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 If `Protocol negotiation failed: NT_STATUS_IO_TIMEOUT` is returned,
 refer to [SMB Protocol Negotiation Failed]({{< ref "smb-protocol-negotiation-failed" >}})
 {{</hint>}}
@@ -73,12 +73,12 @@ refer to [SMB Protocol Negotiation Failed]({{< ref "smb-protocol-negotiation-fai
 #### enum4linux [^enum4linux]
 
 ```sh
-enum4linux -a {{< param "war.rhost" >}}
+enum4linux -a {{< param "m.RHOST" >}}
 ```
 
 With credentials:
 ```sh
-enum4linux -a -u "<username>" -p "<passwd>" {{< param "war.rhost" >}}
+enum4linux -a -u "<username>" -p "<passwd>" {{< param "m.RHOST" >}}
 ```
 
 {{<details "Parameters">}}
@@ -90,7 +90,7 @@ enum4linux -a -u "<username>" -p "<passwd>" {{< param "war.rhost" >}}
 #### NSE Scripts
 
 ```sh
-nmap --script "safe or smb-enum-*" -p 139,445 {{< param "war.rhost" >}}
+nmap --script "safe or smb-enum-*" -p 139,445 {{< param "m.RHOST" >}}
 ```
 
 {{<hint info>}}
@@ -109,13 +109,13 @@ NSE SMB enumeration scripts:
 List available shares.
 
 ```sh
-smbclient -N -L //{{< param "war.rhost" >}}
+smbclient -N -L //{{< param "m.RHOST" >}}
 ```
 
 Connect to a share.
 
 ```sh
-smbclient -N //{{< param "war.rhost" >}}/Share
+smbclient -N //{{< param "m.RHOST" >}}/Share
 ```
 
 {{<details "Parameters">}}
@@ -125,7 +125,7 @@ smbclient -N //{{< param "war.rhost" >}}/Share
 
 ## RPC Enumeration
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 `rpcclient`, `impacket`, and more, under [RPC Enumeration]({{< ref "msrpc#enumeration" >}}).
 {{</hint>}}
 
@@ -177,7 +177,7 @@ could be used to make multiple RPC calls
 and obtain useful information
 about the remote system.[^sensepost-ipc]
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 RPC endpoints exposed via IPC$
 include the Server service,
 Task Scheduler,
@@ -200,7 +200,7 @@ Refer to [MSRPC]({{< ref "msrpc" >}}) for more about RPC.
 ## Mount Shares [^mount-smb]
 
 ```sh
-mount -t cifs -o username=user,password=password //{{< param "war.rhost" >}}/Share /mnt/share
+mount -t cifs -o username=user,password=password //{{< param "m.RHOST" >}}/Share /mnt/share
 ```
 
 ## Download Files
@@ -208,7 +208,7 @@ mount -t cifs -o username=user,password=password //{{< param "war.rhost" >}}/Sha
 Create a tar file of the files beneath `users/docs`. [^smbclient]
 
 ```sh
-smbclient //{{< param "war.rhost" >}}/Share "" -N -Tc backup.tar users/docs
+smbclient //{{< param "m.RHOST" >}}/Share "" -N -Tc backup.tar users/docs
 ```
 
 {{<details "Parameters">}}

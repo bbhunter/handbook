@@ -14,7 +14,7 @@ image,
 or file
 [^steganography-wiki]
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 Steganography is used to hide
 the occurrence of communication.
 {{</hint>}}
@@ -24,19 +24,19 @@ the occurrence of communication.
 Determine the file type.
 
 ```sh
-file {{< param "war.tfile" >}}
+file {{< param "m.TFILE" >}}
 ```
 
 Read file meta-data.
 
 ```sh
-exiftool {{< param "war.tfile" >}}
+exiftool {{< param "m.TFILE" >}}
 ```
 
 Extract printable characters.
 
 ```sh
-strings -n 6 -e s {{< param "war.tfile" >}}
+strings -n 6 -e s {{< param "m.TFILE" >}}
 ```
 {{<details "Parameters">}}
 - `-n <length>`: Print sequence of at least `<length>` chars long.
@@ -64,13 +64,13 @@ Steghide supports **JPEG**, **BMP**, **WAV** and **AU** file formats.
 Display information about a cover or stego file.
 
 ```sh
-steghide info {{< param "war.tfile" >}}
+steghide info {{< param "m.TFILE" >}}
 ```
 
 Extract secret data.
 
 ```sh
-steghide extract -sf {{< param "war.tfile" >}}
+steghide extract -sf {{< param "m.TFILE" >}}
 ```
 
 {{<details "Parameters">}}
@@ -87,7 +87,7 @@ and will attempt to
 run on any file.
 
 ```sh
-stegoveritas {{< param "war.tfile" >}}
+stegoveritas {{< param "m.TFILE" >}}
 ```
 
 ### LSBSteg [^stegolsb]
@@ -99,7 +99,7 @@ of an RGB image,
 **BMP** or **PNG**.
 
 ```sh
-stegolsb steglsb -r -i {{< param "war.tfile" >}} -o output.zip -n 2
+stegolsb steglsb -r -i {{< param "m.TFILE" >}} -o output.zip -n 2
 ```
 {{<details "Parameters">}}
 - `-r`: To recover data from a sound file.
@@ -125,7 +125,7 @@ to hide and recover files
 from the samples of a **WAV** file.
 
 ```sh
-stegolsb wavsteg -r -i {{< param "war.tfile" >}} -o output.txt -n 2 -b 5589889
+stegolsb wavsteg -r -i {{< param "m.TFILE" >}} -o output.txt -n 2 -b 5589889
 ```
 {{<details "Parameters">}}
 - `-r`: To recover data from a sound file.

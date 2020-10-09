@@ -29,7 +29,7 @@ NetBIOS provides three distinct services:
 - Datagram Distribution Service (NetBIOS-DGM) for connectionless communication.
 - Session Service (NetBIOS-SSN) for connection-oriented communication.
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 [SMB]({{< ref "smb" >}}) runs **on top** of the Session Service and Datagram Service.
 It is not an integral part of NetBIOS.
 {{</hint>}}
@@ -89,7 +89,7 @@ NetBIOS-DGM runs on UDP port 139.
 
 #### nmblookup [^nmblookup]
 ```sh
-nmblookup -A {{< param "war.rhost" >}}
+nmblookup -A {{< param "m.RHOST" >}}
 ```
 {{<details "Parameters">}}
 - `<name>`: NetBIOS Name
@@ -98,10 +98,10 @@ nmblookup -A {{< param "war.rhost" >}}
 
 #### nbtscan [^nbtscan]
 ```sh
-nbtscan {{< param "war.rhost" >}}
+nbtscan {{< param "m.RHOST" >}}
 ```
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 Continue NetBIOS enumeration with [SMB]({{< ref "smb" >}}).
 {{</hint>}}
 

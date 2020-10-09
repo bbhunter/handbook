@@ -19,22 +19,22 @@ FTP is built on a client-server architecture using separate control and data con
 #### Telnet
 
 ```sh
-telnet {{< param "war.rhost" >}} 21
+telnet {{< param "m.RHOST" >}} 21
 ```
 
 #### Netcat
 ```sh
-nc -n {{< param "war.rhost" >}} 21
+nc -n {{< param "m.RHOST" >}} 21
 ```
 
 #### [banner](https://nmap.org/nsedoc/scripts/banner.html) NSE Script
 ```sh
-nmap -sV -script banner -p21 -Pn {{< param "war.rhost" >}}
+nmap -sV -script banner -p21 -Pn {{< param "m.RHOST" >}}
 ```
 
 #### FTP
 ```sh
-ftp {{< param "war.rhost" >}}
+ftp {{< param "m.RHOST" >}}
 ```
 
 ## FTP Exploits Search
@@ -50,9 +50,9 @@ During the [port scanning]({{< ref "port-scanning" >}}) phase Nmap's script scan
 Try anonymous login using `anonymous:anonymous` credentials.
 
 ```sh
-ftp {{< param "war.rhost" >}}
+ftp {{< param "m.RHOST" >}}
 …
-Name ({{< param "war.rhost" >}}:kali): anonymous
+Name ({{< param "m.RHOST" >}}:kali): anonymous
 331 Please specify the password.
 Password: [anonymous]
 230 Login successful.
@@ -74,7 +74,7 @@ ftp> ls -lat
 Due to its insecure nature, FTP support is being dropped by [Firefox](https://bugzilla.mozilla.org/show_bug.cgi?id=1574475) and [Google Chrome](https://chromestatus.com/feature/6246151319715840).
 {{</hint>}}
 
-Try accessing `ftp://user:pass@{{< param "war.rhost" >}}` from your browser.
+Try accessing `ftp://user:pass@{{< param "m.RHOST" >}}` from your browser.
 If not credentials provided `anonymous:anonymous` is assumed.
 
 ## Brute Forcing
@@ -106,7 +106,7 @@ Binary and ASCII files have to be uploading using the `binary` or `ascii` mode r
 Recursively download FTP folder content.[^so-ftp-mirroring]
 
 ```sh
-wget -m ftp://user:pass@{{< param "war.rhost" >}}/
+wget -m ftp://user:pass@{{< param "m.RHOST" >}}/
 ```
 
 [^wiki-ftp]: Contributors to Wikimedia projects. “File Transfer Protocol - Wikipedia.” Wikipedia, the Free Encyclopedia, Wikimedia Foundation, Inc., 24 May 2002, https://en.wikipedia.org/wiki/File_Transfer_Protocol.

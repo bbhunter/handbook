@@ -14,7 +14,7 @@ Unable to negotiate with 10.10.10.7 port 22: no matching key exchange method fou
 
 The server offered `diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1`. OpenSSH supports these methods but does not enable it by default because is weak and within the theoretical range of the so-called Logjam attack.  
 
-More about the Logjam attack in [Imperfect Forward Secrecy:How Diffie-Hellman Fails in Practice](https://weakdh.org/).
+More about the Logjam attack in [Imperfect Form. Secrecy:How Diffie-Hellman Fails in Practice](https://weakdh.org/).
 
 ## Solution
 

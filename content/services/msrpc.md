@@ -14,7 +14,7 @@ Microsoft Remote Procedure Call.
 {{</hint>}}
 
 MSRPC is an interprocess communication (IPC) mechanism
-that allows client/server software communcation.
+that allows client/server softm. communcation.
 That process can be on the same computer,
 on the local network (LAN),
 or across the Internet.
@@ -64,7 +64,7 @@ with a list of well known endpoints.
 Dump the list of RPC endpoints.
 
 ```sh
-rpcdump.py {{< param "war.rhost" >}}
+rpcdump.py {{< param "m.RHOST" >}}
 ```
 {{<details "Parameters">}}
 - `target`: `[[domain/]username[:password]@]address`
@@ -79,7 +79,7 @@ and other sensitive information
 exported through the SAMR (Security Account Manager Remote) interface.
 
 ```sh
-samrdump.py {{< param "war.rhost" >}}
+samrdump.py {{< param "m.RHOST" >}}
 ```
 {{<details "Parameters">}}
 - `target`: `[[domain/]username[:password]@]address`
@@ -88,7 +88,7 @@ samrdump.py {{< param "war.rhost" >}}
 
 #### [msrpc-enum](https://nmap.org/nsedoc/scripts/msrpc-enum.html) NSE Script
 ```sh
-nmap -sV -script msrpc-enum -Pn {{< param "war.rhost" >}}
+nmap -sV -script msrpc-enum -Pn {{< param "m.RHOST" >}}
 ```
 
 ## Query RPC
@@ -109,7 +109,7 @@ a valid username and password must be provided.
 
 #### rpcclient [^rpcclient]
 ```sh
-rpcclient -U "" -N {{< param "war.rhost" >}}
+rpcclient -U "" -N {{< param "m.RHOST" >}}
 ```
 {{<details "Parameters">}}
 - `-U`: Set the network username.

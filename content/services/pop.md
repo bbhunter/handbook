@@ -39,17 +39,17 @@ as online and offline modes.
 
 #### Telnet
 ```sh
-telnet {{< param "war.rhost" >}} 110
+telnet {{< param "m.RHOST" >}} 110
 ```
 
 #### Netcat
 ```sh
-nc -n {{< param "war.rhost" >}} 110
+nc -n {{< param "m.RHOST" >}} 110
 ```
 
 #### openssl [^openssl]
 ```sh
-openssl s_client -crlf -connect {{< param "war.rhost" >}}:995
+openssl s_client -crlf -connect {{< param "m.RHOST" >}}:995
 ```
 {{<details "Parameters">}}
 - `s_client`:  SSL/TLS client program.
@@ -63,7 +63,7 @@ See [SMTP NTLM Information Disclosure]({{< ref "smtp#ntlm-information-disclosure
 #### [pop3-ntlm-info](https://nmap.org/nsedoc/scripts/pop3-ntlm-info.html) NSE Script
 
 ```sh
-nmap -p 110,995 --script pop3-ntlm-info {{< param "war.rhost" >}}
+nmap -p 110,995 --script pop3-ntlm-info {{< param "m.RHOST" >}}
 ```
 
 ## Capabilities
@@ -73,7 +73,7 @@ POP3 capabilities are defined in [RFC2449](https://tools.ietf.org/html/rfc2449#s
 #### [pop3-capabilities](https://nmap.org/nsedoc/scripts/pop3-capabilities.html) NSE Script
 
 ```sh
-nmap -p 110,995 --script pop3-capabilities {{< param "war.rhost" >}}
+nmap -p 110,995 --script pop3-capabilities {{< param "m.RHOST" >}}
 ```
 
 ## Commands

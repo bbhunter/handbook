@@ -46,19 +46,19 @@ See [SMTP commands reference](https://tools.ietf.org/html/rfc5321#section-4.1).
 
 #### Telnet
 ```sh
-telnet {{< param "war.rhost" >}} 25
+telnet {{< param "m.RHOST" >}} 25
 ```
 
 #### Netcat
 ```sh
-nc -n {{< param "war.rhost" >}} 25
+nc -n {{< param "m.RHOST" >}} 25
 ```
 
 ### SMPTS
 
 #### openssl [^openssl]
 ```sh
-openssl s_client -starttls smtp -crlf -connect {{< param "war.rhost" >}}:587
+openssl s_client -starttls smtp -crlf -connect {{< param "m.RHOST" >}}:587
 ```
 {{<details "Parameters">}}
 - `s_client`:  SSL/TLS client program.
@@ -71,13 +71,13 @@ openssl s_client -starttls smtp -crlf -connect {{< param "war.rhost" >}}:587
 #### [smtp-commands](https://nmap.org/nsedoc/scripts/smtp-commands.html) NSE Script
 
 ```sh
-nmap -p 25,465,587 --script smtp-commands {{< param "war.rhost" >}}
+nmap -p 25,465,587 --script smtp-commands {{< param "m.RHOST" >}}
 ```
 
 #### [smtp-enum-users](https://nmap.org/nsedoc/scripts/smtp-enum-users.html) NSE Script
 
 ```sh
-nmap -p 25,465,587 --script smtp-enum-users {{< param "war.rhost" >}}
+nmap -p 25,465,587 --script smtp-enum-users {{< param "m.RHOST" >}}
 ```
 
 ## NTLM Information Disclosure
@@ -97,7 +97,7 @@ and OS build version.
 #### Manually
 
 ```sh
-telnet {{< param "war.rdomain" >}} 587
+telnet {{< param "m.RDOMAIN" >}} 587
 ...
 >> HELO
 250 example.com Hello [x.x.x.x]
@@ -110,7 +110,7 @@ NTLM supported
 #### [smtp-ntlm-info](https://nmap.org/nsedoc/scripts/smtp-ntlm-info.html) NSE Script
 
 ```sh
-nmap -p 587 --script smtp-ntlm-info --script-args smtp-ntlm-info.domain={{< param "war.rdomain" >}} {{< param "war.rhost" >}}
+nmap -p 587 --script smtp-ntlm-info --script-args smtp-ntlm-info.domain={{< param "m.RDOMAIN" >}} {{< param "m.RHOST" >}}
 ```
 
 ## Commands

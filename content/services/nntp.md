@@ -26,17 +26,17 @@ and post articles.
 
 #### Telnet
 ```sh
-telnet {{< param "war.rhost" >}} 119
+telnet {{< param "m.RHOST" >}} 119
 ```
 
 #### Netcat
 ```sh
-nc -n {{< param "war.rhost" >}} 119
+nc -n {{< param "m.RHOST" >}} 119
 ```
 
 #### openssl [^openssl]
 ```sh
-openssl s_client -crlf -connect {{< param "war.rhost" >}}:563
+openssl s_client -crlf -connect {{< param "m.RHOST" >}}:563
 ```
 {{<details "Parameters">}}
 - `s_client`:  SSL/TLS client program.

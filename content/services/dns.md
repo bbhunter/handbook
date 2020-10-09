@@ -18,7 +18,7 @@ It associates different information with domain names assigned to each of the pa
 
 By default, DNS uses UDP on port 53 to serve requests. When the size of the request, or the response, exceeds the single packet size of 512 bytes, the query is re-sent using TCP. Multiple records responses, IPv6 responses, big TXT records, DNSSEC responses, and **zone transfers** are some examples of these requests.
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 When DNS is running on TCP, it is worth checking if [zone trasfer]({{< ref "#zone-transfer" >}}) is enabled.
 {{</hint>}}
 
@@ -33,13 +33,13 @@ The `version.bind` directive is stored under the `options` section in the `/etc/
 #### dig
 
 ```sh
-dig version.bind CHAOS TXT @{{< param "war.rhost" >}}
+dig version.bind CHAOS TXT @{{< param "m.RHOST" >}}
 ```
 
 #### [dns-nsid](https://nmap.org/nsedoc/scripts/dns-nsid.html) NSE Script
 
 ```sh
-nmap -sV --script dns-nsid -p53 -Pn {{< param "war.rhost" >}}
+nmap -sV --script dns-nsid -p53 -Pn {{< param "m.RHOST" >}}
 ```
 
 ## DNS Exploits Search
@@ -54,11 +54,11 @@ A zone transfer is the process where a DNS server, usually a Master server, pass
 
 ### dig
 ```sh
-dig axfr @{{< param "war.rhost" >}} domain
+dig axfr @{{< param "m.RHOST" >}} domain
 ```
 {{<details "Parameters">}}
 - `axfr`: initiate an *AXFR* zone transfer query.
-- `@{{< param "war.rhost" >}}`: name or IP of the server to query.
+- `@{{< param "m.RHOST" >}}`: name or IP of the server to query.
 - `domain`: name of the resource record that is to be looked up.
 {{</details>}}
 

