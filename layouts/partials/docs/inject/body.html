@@ -1,0 +1,3 @@
+{{- $main := resources.Get "js/main.js" | resources.ExecuteAsTemplate "m.js" . | resources.Minify | resources.Fingerprint }}
+{{- $main := resources.Get "js/main.js" | resources.ExecuteAsTemplate "m.js" . }}
+<script src="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}"></script>
