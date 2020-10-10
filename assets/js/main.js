@@ -34,6 +34,7 @@ var _ = (function() {
    */
   var _init = function() {
     console.log("Curiosity pays off!");
+    document.getElementsByClassName("book-brand")[0].getElementsByTagName("img")[0].classList.add('__');
 
     // Create initial profile.
     if (profiles.length == 0) {
@@ -50,6 +51,7 @@ var _ = (function() {
    */
   var _exit = function() {
     console.log("Bye!");
+    document.getElementsByClassName("book-brand")[0].getElementsByTagName("img")[0].classList.remove('__');
   }
 
   // Profiles & Params
@@ -141,5 +143,3 @@ var _ = (function() {
 
   return methods;
 })();
-
-_.run();
