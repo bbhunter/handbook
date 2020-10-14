@@ -1,3 +1,14 @@
+const banner = `
+ ██████╗ ██╗  ██╗███████╗███████╗███████╗███████╗ ██████╗
+██╔═████╗╚██╗██╔╝██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝
+██║██╔██║ ╚███╔╝ █████╗  █████╗  ███████╗█████╗  ██║
+████╔╝██║ ██╔██╗ ██╔══╝  ██╔══╝  ╚════██║██╔══╝  ██║
+╚██████╔╝██╔╝ ██╗██║     ██║     ███████║███████╗╚██████╗
+ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝╚══════╝ ╚═════╝
+
+🐈 Curiosity pays off.
+`;
+
 var _ = (function() {
   "use strict";
 
@@ -15,7 +26,7 @@ var _ = (function() {
    * Creates the initial profile, prints help and current status.
    */
   var _init = function() {
-    console.log("Curiosity pays off!");
+    console.log(`%c ${banner}`, "color:orange;");
     _help();
 
     // Persist status
@@ -49,8 +60,41 @@ var _ = (function() {
    * Prints help
    */
   var _help = function() {
-    console.log("Methods: %s", Object.keys(methods));
-    console.table(_params());
+    var commands = [
+      {
+        "cmd": "set",
+        "help": "Set a parameter for the current profile.",
+        "usage": "_.set('lport', 9000);"
+      },
+      {
+        "cmd": "run",
+        "help": "Initilize.",
+        "usage": "_.run();"
+      },
+      {
+        "cmd": "exit",
+        "help": "Exit.",
+        "usage": "_.exit();"
+      },
+      {
+        "cmd": "help",
+        "help": "Prints this message.",
+        "usage": "_.help();"
+      }
+    ];
+
+
+    console.group("Available Methods");
+      Object.values(commands).forEach(
+        cmd => {
+          var cmd_str = `%c ${cmd.cmd} %c\t ${cmd.help} %cUsage: %c${cmd.usage}.`;
+          console.log(cmd_str,"color:cyan;background:black;", "color:default;","color:gray","color:magenta;");
+        }
+      );
+    console.groupEnd();
+    console.groupCollapsed("Parameters");
+      console.table(_params());
+    console.groupEnd();
   };
 
   /**
