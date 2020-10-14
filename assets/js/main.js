@@ -1,12 +1,60 @@
 var _ = (function() {
   "use strict";
 
+  const item_profiles = "_profiles";
+  const item_profile = "_cprofile"
+  const item_status = "_status"
+
   var defaults = {{ $.Site.Params.m | jsonify }}
-  var profiles = JSON.parse(localStorage.getItem("profiles")) || [];
-  var current_profile = localStorage.getItem("current_profile") || "default";
+  var profiles = JSON.parse(localStorage.getItem(item_profiles)) || [];
+  var current_profile = localStorage.getItem(item_profile) || "default";
+  var status = JSON.parse(localStorage.getItem(item_status)) || false;
 
   /**
-   * Replace values in the DOM.
+   * Initial setup.
+   * Creates the initial profile, prints help and current status.
+   */
+  var _init = function() {
+    console.log("Curiosity pays off!");
+    _help();
+
+    // Persist status
+    localStorage.setItem(item_status, true);
+
+    // Create initial profile.
+    if (profiles.length == 0) _set_profile(current_profile, {})
+
+    // Set logo indicator
+    document.getElementsByClassName("book-brand")[0].getElementsByTagName("img")[0].classList.add('__');
+
+    _replace_all(defaults, _params());
+  }
+
+  /**
+   * Reset to the default state.
+   */
+  var _exit = function() {
+    console.log("Bye!");
+
+    // Persist status
+    localStorage.setItem(item_status, false);
+
+    // Reset logo indicator
+    document.getElementsByClassName("book-brand")[0].getElementsByTagName("img")[0].classList.remove('__');
+
+    _replace_all(_params(), defaults);
+  }
+
+  /**
+   * Prints help
+   */
+  var _help = function() {
+    console.log("Methods: %s", Object.keys(methods));
+    console.table(_params());
+  };
+
+  /**
+   * Replace value in the DOM.
    *
    * @param {String}  o Old Value
    * @param {String}  n New Value
@@ -23,38 +71,8 @@ var _ = (function() {
    * @param {Object} n Parameters object.
    */
   var _replace_all = function(o,n) {
-    for (const v in n) {
-      _replace(o[v], n[v]);
-    }
+    for (const v in n) _replace(o[v], n[v]);
   }
-
-  /**
-   * Initial setup.
-   * Creates the initial profile, prints help and current status.
-   */
-  var _init = function() {
-    console.log("Curiosity pays off!");
-    document.getElementsByClassName("book-brand")[0].getElementsByTagName("img")[0].classList.add('__');
-
-    // Create initial profile.
-    if (profiles.length == 0) {
-      _set_profile(current_profile, {})
-    }
-
-    // List available methods.
-    console.log("Methods: %s", Object.keys(methods));
-    console.table(_params());
-  }
-
-  /**
-   * Reset to the default state.
-   */
-  var _exit = function() {
-    console.log("Bye!");
-    document.getElementsByClassName("book-brand")[0].getElementsByTagName("img")[0].classList.remove('__');
-  }
-
-  // Profiles & Params
 
   /**
    * Creates new profile
@@ -71,8 +89,8 @@ var _ = (function() {
       "params": params
     }
     profiles.push(profile)
-    localStorage.setItem("current_profile", name)
-    localStorage.setItem("profiles", JSON.stringify(profiles))
+    localStorage.setItem(item_profile, name)
+    localStorage.setItem(item_profiles, JSON.stringify(profiles))
   }
 
   /**
@@ -95,14 +113,12 @@ var _ = (function() {
   var _update_profile_param = function(name, param, value) {
     if (param in _params()) {
       var profile = _get_profile(name);
-
-      // Replace parameter
       _replace(profile["params"][param], value)
 
       // Update stored profiles
       profile["params"][param] = value;
       profiles[profiles.findIndex(p => p.name == profile.name)] = profile
-      localStorage.setItem("profiles", JSON.stringify(profiles))
+      localStorage.setItem(item_profiles, JSON.stringify(profiles))
     }else{
       console.error("Invalid parameter.");
     }
@@ -123,23 +139,25 @@ var _ = (function() {
 
   var methods = {};
 
+  methods.status = status;
+
   methods.run = function() {
     _init();
-    _replace_all(defaults, _params());
+  }
+
+  methods.exit = function() {
+    _exit();
   }
 
   methods.set = function(param, value) {
     _update_profile_param(current_profile, param,value);
   }
 
-  methods.options = function() {
-    console.table(_params());
-  }
-
-  methods.exit = function() {
-    _exit();
-    _replace_all(_params(), defaults);
+  methods.help = function() {
+    _help();
   }
 
   return methods;
 })();
+
+if (_.status === true) _.run();
